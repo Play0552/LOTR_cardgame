@@ -238,7 +238,7 @@ class Ui_LOTR(object):
         font.setItalic(True)
         self.Damage_counter.setFont(font)
         self.Damage_counter.setStyleSheet("color: rgb(184, 73, 56);\n"
-"background-color: rgb(44, 40, 37);")
+                                          "background-color: rgb(44, 40, 37);")
         self.Damage_counter.setObjectName("Damage_counter")
         self.Fear_botton_4 = QtWidgets.QPushButton(self.Main_table)
         self.Fear_botton_4.setEnabled(False)
@@ -273,7 +273,7 @@ class Ui_LOTR(object):
         font.setItalic(True)
         self.Fear_counter.setFont(font)
         self.Fear_counter.setStyleSheet("background-color: rgb(44, 40, 37);\n"
-"color: rgb(46, 137, 123);")
+                                        "color: rgb(46, 137, 123);")
         self.Fear_counter.setObjectName("Fear_counter")
         self.Fear_botton_6 = QtWidgets.QPushButton(self.Main_table)
         self.Fear_botton_6.setEnabled(False)
@@ -372,7 +372,8 @@ class Ui_LOTR(object):
         self.determination.setAutoFillBackground(False)
         self.determination.setText("")
         icon10 = QtGui.QIcon()
-        icon10.addPixmap(QtGui.QPixmap("Cards/Решительность/Решительность_рубашка.JPG"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon10.addPixmap(QtGui.QPixmap("Cards/Решительность/Решительность_рубашка.JPG"), QtGui.QIcon.Normal,
+                         QtGui.QIcon.Off)
         self.determination.setIcon(icon10)
         self.determination.setIconSize(QtCore.QSize(171, 243))
         self.determination.setShortcut("")
@@ -399,31 +400,23 @@ class Ui_LOTR(object):
         self.Select_hero_btn = QtWidgets.QPushButton(self.Main_table)
         self.Select_hero_btn.setGeometry(QtCore.QRect(660, 710, 251, 31))
         self.Select_hero_btn.setStyleSheet("background-color: rgb(3, 35, 46);\n"
-"color: rgb(182, 155, 9);\n"
-"font: 16pt \"Segoe Print\";")
+                                           "color: rgb(182, 155, 9);\n"
+                                           "font: 16pt \"Segoe Print\";")
         self.Select_hero_btn.setObjectName("Select_hero_btn")
 
         self.shuffle_card_btn = QtWidgets.QPushButton(self.Main_table)
         self.shuffle_card_btn.setGeometry(QtCore.QRect(1430, 650, 281, 41))
         self.shuffle_card_btn.setStyleSheet("background-color: rgb(3, 35, 46);\n"
-"color: rgb(182, 155, 9);\n"
-"font: 16pt \"Segoe Print\";")
+                                            "color: rgb(182, 155, 9);\n"
+                                            "font: 16pt \"Segoe Print\";")
         self.shuffle_card_btn.setObjectName("shuffle_card_btn")
         self.shuffle_card_btn.setEnabled(False)
-
-        self.discarding_btn = QtWidgets.QPushButton(self.Main_table)
-        self.discarding_btn.setGeometry(QtCore.QRect(1250, 150, 131, 41))
-        self.discarding_btn.setStyleSheet("background-color: rgb(3, 35, 46);\n"
-"color: rgb(182, 155, 9);\n"
-"font: 16pt \"Segoe Print\";")
-        self.discarding_btn.setObjectName("discarding_btn")
-        self.discarding_btn.setEnabled(False)
 
         self.Select_hero = QtWidgets.QComboBox(self.Main_table)
         self.Select_hero.setGeometry(QtCore.QRect(695, 504, 171, 31))
         self.Select_hero.setStyleSheet("background-color: rgb(0, 33, 43);\n"
-"color: rgb(185, 161, 24);\n"
-"font: 22pt \"Segoe Print\";")
+                                       "color: rgb(185, 161, 24);\n"
+                                       "font: 22pt \"Segoe Print\";")
         self.Select_hero.setObjectName("Select_hero")
         self.Select_hero.addItem("")
         self.Select_hero.addItem("")
@@ -476,7 +469,6 @@ class Ui_LOTR(object):
         self.courage.raise_()
         self.Select_hero_btn.raise_()
         self.shuffle_card_btn.raise_()
-        self.discarding_btn.raise_()
         self.Select_hero.raise_()
         self.Table.addTab(self.Main_table, "")
         self.Weapon = QtWidgets.QWidget()
@@ -515,7 +507,7 @@ class Ui_LOTR(object):
         self.Discard = QtWidgets.QWidget()
         self.Discard.setObjectName("Discard")
         self.Table.addTab(self.Discard, "")
-        self.gridLayout.addWidget(self.Table, 0, 0, 1, 1, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignVCenter)
+        self.gridLayout.addWidget(self.Table, 0, 0, 1, 1, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         LOTR.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(LOTR)
@@ -530,10 +522,7 @@ class Ui_LOTR(object):
         self.courage_click()
         self.skill_deck_click()
         self.shuffle_card_btn_click()
-        self.discarding_btn_click()
         self.drop_click()
-
-
 
         x = 0
         y = 0
@@ -759,15 +748,7 @@ class Ui_LOTR(object):
         for i in range(1, 5):
             exec(f'''self.use_skill{i}_click()''')
 
-
-
-
-#==============================================================================
-
-
-
-
-
+    # ==============================================================================
 
     def retranslateUi(self, LOTR):
         _translate = QtCore.QCoreApplication.translate
@@ -782,7 +763,6 @@ class Ui_LOTR(object):
         self.card_down_btn_1.setText(_translate("LOTR", "Вниз"))
         self.Select_hero_btn.setText(_translate("LOTR", "Подтвердить выбор"))
         self.shuffle_card_btn.setText(_translate("LOTR", "Перемешать колоду"))
-        self.discarding_btn.setText(_translate("LOTR", "В сброс"))
         self.Select_hero.setItemText(0, _translate("LOTR", "Гимли"))
         self.Select_hero.setItemText(1, _translate("LOTR", "Леголас"))
         self.Select_hero.setItemText(2, _translate("LOTR", "Елена"))
@@ -900,7 +880,6 @@ else:
     self.nickname{num}.setIconSize(QtCore.QSize(160, 240))
     Ui_LOTR.deck.remove('{path}')''')
 
-
     for i, v in enumerate(main.Weakness):
         exec(f'''def weaknes{i}_click(self):
             self.weaknes{i}.clicked.connect(lambda: self.select_weaknes('{v}', '{i}'))''')
@@ -912,7 +891,6 @@ else:
 else:
     self.weaknes{num}.setIconSize(QtCore.QSize(160, 240))
     Ui_LOTR.deck.remove('{path}')''')
-
 
     for i, v in enumerate(main.Cracker_plus):
         exec(f'''def cracker{i}_click(self):
@@ -997,7 +975,8 @@ else:
             self.courage.setGeometry(QtCore.QRect(32, 500, 155, 241))
         else:
             icon_courage = QtGui.QIcon()
-            icon_courage.addPixmap(QtGui.QPixmap("Cards/Смелость/Смелость_рубашка.JPG"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon_courage.addPixmap(QtGui.QPixmap("Cards/Смелость/Смелость_рубашка.JPG"), QtGui.QIcon.Normal,
+                                   QtGui.QIcon.Off)
             self.courage.setIcon(icon_courage)
             self.courage.setGeometry(QtCore.QRect(30, 510, 161, 228))
 
@@ -1007,12 +986,14 @@ else:
     def determination_(self):
         if self.determination.isChecked():
             icon_determination = QtGui.QIcon()
-            icon_determination.addPixmap(QtGui.QPixmap("Cards/Решительность/Решительность.JPG"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon_determination.addPixmap(QtGui.QPixmap("Cards/Решительность/Решительность.JPG"), QtGui.QIcon.Normal,
+                                         QtGui.QIcon.Off)
             self.determination.setIcon(icon_determination)
             self.determination.setGeometry(QtCore.QRect(31, 741, 155, 241))
         else:
             icon_determination = QtGui.QIcon()
-            icon_determination.addPixmap(QtGui.QPixmap("Cards/Решительность/Решительность_рубашка.JPG"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon_determination.addPixmap(QtGui.QPixmap("Cards/Решительность/Решительность_рубашка.JPG"),
+                                         QtGui.QIcon.Normal, QtGui.QIcon.Off)
             self.determination.setIcon(icon_determination)
             self.determination.setGeometry(QtCore.QRect(28, 746, 161, 228))
 
@@ -1022,12 +1003,14 @@ else:
     def secrecy_(self):
         if self.secrecy.isChecked():
             icon_secrecy = QtGui.QIcon()
-            icon_secrecy.addPixmap(QtGui.QPixmap("Cards/Скрытность/Скрытность.JPG"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon_secrecy.addPixmap(QtGui.QPixmap("Cards/Скрытность/Скрытность.JPG"), QtGui.QIcon.Normal,
+                                   QtGui.QIcon.Off)
             self.secrecy.setIcon(icon_secrecy)
             self.secrecy.setGeometry(QtCore.QRect(233, 745, 155, 241))
         else:
             icon_secrecy = QtGui.QIcon()
-            icon_secrecy.addPixmap(QtGui.QPixmap("Cards/Скрытность/Скрытность_рубашка.JPG"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            icon_secrecy.addPixmap(QtGui.QPixmap("Cards/Скрытность/Скрытность_рубашка.JPG"), QtGui.QIcon.Normal,
+                                   QtGui.QIcon.Off)
             self.secrecy.setIcon(icon_secrecy)
             self.secrecy.setGeometry(QtCore.QRect(231, 750, 161, 228))
 
@@ -1072,7 +1055,7 @@ else:
             self.card_up_btn_{i}.clicked.connect(lambda: self.card_up({i}))''')
 
     def card_up(self, ind):
-        card = Ui_LOTR.choice_skill_check_deck[ind-1]
+        card = Ui_LOTR.choice_skill_check_deck[ind - 1]
         if card:
             Ui_LOTR.deck.append(card)
             Ui_LOTR.choice_skill_check_deck[ind - 1] = 0
@@ -1080,13 +1063,12 @@ else:
             icon_up.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             exec(f'self.choice_skill_{ind}.setIcon(icon_up)')
 
-
     for i in range(1, 5):
         exec(f'''def card_down{i}_click(self):
             self.card_down_btn_{i}.clicked.connect(lambda: self.card_down({i}))''')
 
     def card_down(self, ind):
-        card = Ui_LOTR.choice_skill_check_deck[ind-1]
+        card = Ui_LOTR.choice_skill_check_deck[ind - 1]
         if card:
             Ui_LOTR.deck[:0] = [card]
             Ui_LOTR.choice_skill_check_deck[ind - 1] = 0
@@ -1099,7 +1081,7 @@ else:
             self.choice_skill_{i}.clicked.connect(lambda: self.preparing({i}))''')
 
     def preparing(self, ind):
-        card = Ui_LOTR.choice_skill_check_deck[ind-1]
+        card = Ui_LOTR.choice_skill_check_deck[ind - 1]
         if card:
 
             for index, occupied in enumerate(Ui_LOTR.active_skill_deck):
@@ -1107,11 +1089,13 @@ else:
                     Ui_LOTR.active_skill_deck[index] = card
                     icon_active = QtGui.QIcon()
                     icon_active.addPixmap(QtGui.QPixmap(f'{card}'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-                    exec(f'self.skill_{index+1}_activate.setIcon(icon_active)')
-                    exec(f'self.skill_{index+1}_activate.setGeometry(QtCore.QRect(self.skill_{index+1}_activate.geometry().getRect()[0]+4, self.skill_{index+1}_activate.geometry().getRect()[1], 155, 241))')
+                    exec(f'self.skill_{index + 1}_activate.setIcon(icon_active)')
+                    exec(
+                        f'self.skill_{index + 1}_activate.setGeometry(QtCore.QRect(self.skill_{index + 1}_activate.geometry().getRect()[0]+4, self.skill_{index + 1}_activate.geometry().getRect()[1], 155, 241))')
                     Ui_LOTR.choice_skill_check_deck[ind - 1] = 0
                     icon_deactive = QtGui.QIcon()
-                    icon_deactive.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                    icon_deactive.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal,
+                                            QtGui.QIcon.Off)
                     exec(f'self.choice_skill_{ind}.setIcon(icon_deactive)')
                     break
 
@@ -1120,7 +1104,7 @@ else:
             self.skill_{i}_activate.clicked.connect(lambda: self.use_skill({i}))''')
 
     def use_skill(self, ind):
-        card = Ui_LOTR.active_skill_deck[ind-1]
+        card = Ui_LOTR.active_skill_deck[ind - 1]
         if card:
             Ui_LOTR.active_skill_deck[ind - 1] = 0
             Ui_LOTR.discarding_deck.append(card)
@@ -1128,9 +1112,8 @@ else:
             icon_use = QtGui.QIcon()
             icon_use.addPixmap(QtGui.QPixmap('Cards/Подготовленный навык.JPG'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             exec(f'self.skill_{ind}_activate.setIcon(icon_use)')
-            exec(f'self.skill_{ind}_activate.setGeometry(QtCore.QRect(self.skill_{ind}_activate.geometry().getRect()[0]-4, self.skill_{ind}_activate.geometry().getRect()[1], 161, 228))')
-
-
+            exec(
+                f'self.skill_{ind}_activate.setGeometry(QtCore.QRect(self.skill_{ind}_activate.geometry().getRect()[0]-4, self.skill_{ind}_activate.geometry().getRect()[1], 161, 228))')
 
     def skill_deck_click(self):
         self.skill_deck.clicked.connect(self.skill_select)
@@ -1139,11 +1122,10 @@ else:
         for i, ready_skill in enumerate(Ui_LOTR.choice_skill_check_deck):
             if not ready_skill:
                 Ui_LOTR.choice_skill_check_deck[i] = Ui_LOTR.deck.pop()
-                exec(f'''icon_choice_skill{i+1} = QtGui.QIcon()
-icon_choice_skill{i+1}.addPixmap(QtGui.QPixmap(Ui_LOTR.choice_skill_check_deck[{i}]), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-self.choice_skill_{i+1}.setIcon(icon_choice_skill{i+1})''')
+                exec(f'''icon_choice_skill{i + 1} = QtGui.QIcon()
+icon_choice_skill{i + 1}.addPixmap(QtGui.QPixmap(Ui_LOTR.choice_skill_check_deck[{i}]), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+self.choice_skill_{i + 1}.setIcon(icon_choice_skill{i + 1})''')
                 break
-
 
     def select_hero_click(self):
         self.Select_hero_btn.clicked.connect(self.select_hero)
@@ -1197,7 +1179,6 @@ self.choice_skill_{i+1}.setIcon(icon_choice_skill{i+1})''')
         self.determination.setEnabled(True)
         self.courage.setEnabled(True)
         self.shuffle_card_btn.setEnabled(True)
-        self.discarding_btn.setEnabled(True)
         self.Select_hero.close()
         self.Select_hero_btn.close()
         self.Hero_card.setPixmap(QtGui.QPixmap(f"Cards/Карты персонажей/{hero_name_ru}.JPG"))
@@ -1218,11 +1199,10 @@ self.choice_skill_{i+1}.setIcon(icon_choice_skill{i+1})''')
         for i in range(1, 5):
             exec(f'self.choice_skill_{i}.setIcon(icon_discard)')
 
+    def drop_click(self):
+        self.drop_btn.clicked.connect(self.drop)
 
-    def discarding_btn_click(self):
-        self.discarding_btn.clicked.connect(self.discarding)
-
-    def discarding(self):
+    def drop(self):
         for card in Ui_LOTR.choice_skill_check_deck:
             if card:
                 Ui_LOTR.discarding_deck.append(card)
@@ -1232,11 +1212,6 @@ self.choice_skill_{i+1}.setIcon(icon_choice_skill{i+1})''')
         for i in range(1, 5):
             exec(f'self.choice_skill_{i}.setIcon(icon_discard)')
 
-    def drop_click(self):
-        self.drop_btn.clicked.connect(self.drop)
-
-
-    def drop(self):
         self.Table.removeTab(12)
         self.Discard = QtWidgets.QWidget()
         self.Discard.setObjectName("Discard")
@@ -1260,12 +1235,14 @@ self.choice_skill_{i+1}.setIcon(icon_choice_skill{i+1})''')
                 y += 250
 
             # exec(f'''self.discarding{i}_click()''')
-#Может быть передавать Ui_LOTR.discarding_deck
 
+
+# Может быть передавать Ui_LOTR.discarding_deck
 
 
 if __name__ == '__main__':
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_LOTR()
