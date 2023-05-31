@@ -1119,6 +1119,8 @@ else:
         self.skill_deck.clicked.connect(self.skill_select)
 
     def skill_select(self):
+        if len(Ui_LOTR.deck) == 0:
+            self.shuffle_card()
         for i, ready_skill in enumerate(Ui_LOTR.choice_skill_check_deck):
             if not ready_skill:
                 Ui_LOTR.choice_skill_check_deck[i] = Ui_LOTR.deck.pop()
