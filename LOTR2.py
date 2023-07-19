@@ -12,8 +12,11 @@ class Ui_LOTR(object):
     shuffle(fear_deck)
     damage_deck = main.Damage
     shuffle(damage_deck)
-    discarding_deck = []
+    #колода сброса
+    drop_deck = []
+    #карты только что из колоды, ещё не взяли в руку
     choice_skill_check_deck = [0, 0, 0, 0]
+    #карты в руке
     active_skill_deck = [0, 0, 0, 0]
 
     def setupUi(self, LOTR):
@@ -342,6 +345,27 @@ class Ui_LOTR(object):
         self.card_down_btn_3.setEnabled(False)
         self.card_down_btn_3.setGeometry(QtCore.QRect(1392, 600, 155, 23))
         self.card_down_btn_3.setObjectName("card_down_btn_3")
+        #кнопки (В сброс) рядом с check_card
+        self.check_to_drop_btn_1 = QtWidgets.QPushButton(self.Main_table)
+        self.check_to_drop_btn_1.setEnabled(False)
+        self.check_to_drop_btn_1.setGeometry(QtCore.QRect(1340, 180, 51, 23))
+        self.check_to_drop_btn_1.setObjectName("check_to_drop_btn_1")
+
+        self.check_to_drop_btn_2 = QtWidgets.QPushButton(self.Main_table)
+        self.check_to_drop_btn_2.setEnabled(False)
+        self.check_to_drop_btn_2.setGeometry(QtCore.QRect(1730, 180, 51, 23))
+        self.check_to_drop_btn_2.setObjectName("check_to_drop_btn_2")
+
+        self.check_to_drop_btn_3 = QtWidgets.QPushButton(self.Main_table)
+        self.check_to_drop_btn_3.setEnabled(False)
+        self.check_to_drop_btn_3.setGeometry(QtCore.QRect(1340, 460, 51, 23))
+        self.check_to_drop_btn_3.setObjectName("check_to_drop_btn_3")
+
+        self.check_to_drop_btn_4 = QtWidgets.QPushButton(self.Main_table)
+        self.check_to_drop_btn_4.setEnabled(False)
+        self.check_to_drop_btn_4.setGeometry(QtCore.QRect(1730, 460, 51, 23))
+        self.check_to_drop_btn_4.setObjectName("check_to_drop_btn_4")
+
         self.secrecy = QtWidgets.QPushButton(self.Main_table)
         self.secrecy.setEnabled(False)
         self.secrecy.setGeometry(QtCore.QRect(231, 750, 161, 228))
@@ -470,6 +494,10 @@ class Ui_LOTR(object):
         self.Select_hero_btn.raise_()
         self.shuffle_card_btn.raise_()
         self.Select_hero.raise_()
+        self.check_to_drop_btn_1.raise_()
+        self.check_to_drop_btn_2.raise_()
+        self.check_to_drop_btn_3.raise_()
+        self.check_to_drop_btn_4.raise_()
         self.Table.addTab(self.Main_table, "")
         self.Weapon = QtWidgets.QWidget()
         self.Weapon.setObjectName("Weapon")
@@ -504,9 +532,9 @@ class Ui_LOTR(object):
         self.Pathfinder = QtWidgets.QWidget()
         self.Pathfinder.setObjectName("Pathfinder")
         self.Table.addTab(self.Pathfinder, "")
-        self.Discard = QtWidgets.QWidget()
-        self.Discard.setObjectName("Discard")
-        self.Table.addTab(self.Discard, "")
+        self.Drop = QtWidgets.QWidget()
+        self.Drop.setObjectName("Drop")
+        self.Table.addTab(self.Drop, "")
         self.gridLayout.addWidget(self.Table, 0, 0, 1, 1, QtCore.Qt.AlignHCenter | QtCore.Qt.AlignVCenter)
         LOTR.setCentralWidget(self.centralwidget)
 
@@ -748,6 +776,9 @@ class Ui_LOTR(object):
         for i in range(1, 5):
             exec(f'''self.use_skill{i}_click()''')
 
+        for i in range(1, 5):
+            exec(f'''self.check_to_drop{i}_click()''')
+
     # ==============================================================================
 
     def retranslateUi(self, LOTR):
@@ -763,6 +794,11 @@ class Ui_LOTR(object):
         self.card_down_btn_1.setText(_translate("LOTR", "Вниз"))
         self.Select_hero_btn.setText(_translate("LOTR", "Подтвердить выбор"))
         self.shuffle_card_btn.setText(_translate("LOTR", "Перемешать колоду"))
+        self.check_to_drop_btn_1.setText(_translate('LOTR', 'В сброс'))
+        self.check_to_drop_btn_2.setText(_translate('LOTR', 'В сброс'))
+        self.check_to_drop_btn_3.setText(_translate('LOTR', 'В сброс'))
+        self.check_to_drop_btn_4.setText(_translate('LOTR', 'В сброс'))
+
         self.Select_hero.setItemText(0, _translate("LOTR", "Гимли"))
         self.Select_hero.setItemText(1, _translate("LOTR", "Леголас"))
         self.Select_hero.setItemText(2, _translate("LOTR", "Елена"))
@@ -781,7 +817,7 @@ class Ui_LOTR(object):
         self.Table.setTabText(self.Table.indexOf(self.Musician), _translate("LOTR", "Музыкант"))
         self.Table.setTabText(self.Table.indexOf(self.Hunter), _translate("LOTR", "Охотник"))
         self.Table.setTabText(self.Table.indexOf(self.Pathfinder), _translate("LOTR", "Следопыт"))
-        self.Table.setTabText(self.Table.indexOf(self.Discard), _translate("LOTR", "Сброс"))
+        self.Table.setTabText(self.Table.indexOf(self.Drop), _translate("LOTR", "Сброс"))
 
     for i, v in enumerate(main.Weapon):
         exec(f'''def weapon{i}_click(self):
@@ -1107,13 +1143,14 @@ else:
         card = Ui_LOTR.active_skill_deck[ind - 1]
         if card:
             Ui_LOTR.active_skill_deck[ind - 1] = 0
-            Ui_LOTR.discarding_deck.append(card)
-
+            Ui_LOTR.drop_deck.append(card)
+            Ui_LOTR.drop_forming(self)
             icon_use = QtGui.QIcon()
             icon_use.addPixmap(QtGui.QPixmap('Cards/Подготовленный навык.JPG'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
             exec(f'self.skill_{ind}_activate.setIcon(icon_use)')
             exec(
                 f'self.skill_{ind}_activate.setGeometry(QtCore.QRect(self.skill_{ind}_activate.geometry().getRect()[0]-4, self.skill_{ind}_activate.geometry().getRect()[1], 161, 228))')
+
 
     def skill_deck_click(self):
         self.skill_deck.clicked.connect(self.skill_select)
@@ -1128,6 +1165,21 @@ else:
 icon_choice_skill{i + 1}.addPixmap(QtGui.QPixmap(Ui_LOTR.choice_skill_check_deck[{i}]), QtGui.QIcon.Normal, QtGui.QIcon.Off)
 self.choice_skill_{i + 1}.setIcon(icon_choice_skill{i + 1})''')
                 break
+
+    for i in range(1, 5):
+        exec(f'''def check_to_drop{i}_click(self):
+            self.check_to_drop_btn_{i}.clicked.connect(lambda: self.check_to_drop({i}))''')
+
+    def check_to_drop(self, ind):
+        card = Ui_LOTR.choice_skill_check_deck[ind - 1]
+        if card:
+            Ui_LOTR.drop_deck.append(card)
+            Ui_LOTR.choice_skill_check_deck[ind - 1] = 0
+            icon_up = QtGui.QIcon()
+            icon_up.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            exec(f'self.choice_skill_{ind}.setIcon(icon_up)')
+            Ui_LOTR.drop_forming(self)
+
 
     def select_hero_click(self):
         self.Select_hero_btn.clicked.connect(self.select_hero)
@@ -1181,6 +1233,10 @@ self.choice_skill_{i + 1}.setIcon(icon_choice_skill{i + 1})''')
         self.determination.setEnabled(True)
         self.courage.setEnabled(True)
         self.shuffle_card_btn.setEnabled(True)
+        self.check_to_drop_btn_1.setEnabled(True)
+        self.check_to_drop_btn_2.setEnabled(True)
+        self.check_to_drop_btn_3.setEnabled(True)
+        self.check_to_drop_btn_4.setEnabled(True)
         self.Select_hero.close()
         self.Select_hero_btn.close()
         self.Hero_card.setPixmap(QtGui.QPixmap(f"Cards/Карты персонажей/{hero_name_ru}.JPG"))
@@ -1189,17 +1245,18 @@ self.choice_skill_{i + 1}.setIcon(icon_choice_skill{i + 1})''')
         self.shuffle_card_btn.clicked.connect(self.shuffle_card)
 
     def shuffle_card(self):
-        Ui_LOTR.deck.extend(Ui_LOTR.discarding_deck)
+        Ui_LOTR.deck.extend(Ui_LOTR.drop_deck)
         for card in Ui_LOTR.choice_skill_check_deck:
             if card:
                 Ui_LOTR.deck.append(card)
         shuffle(Ui_LOTR.deck)
-        Ui_LOTR.discarding_deck = []
+        Ui_LOTR.drop_deck = []
+        Ui_LOTR.drop_forming(self)
         Ui_LOTR.choice_skill_check_deck = [0, 0, 0, 0]
-        icon_discard = QtGui.QIcon()
-        icon_discard.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon_drop = QtGui.QIcon()
+        icon_drop.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         for i in range(1, 5):
-            exec(f'self.choice_skill_{i}.setIcon(icon_discard)')
+            exec(f'self.choice_skill_{i}.setIcon(icon_drop)')
 
     def drop_click(self):
         self.drop_btn.clicked.connect(self.drop)
@@ -1207,39 +1264,63 @@ self.choice_skill_{i + 1}.setIcon(icon_choice_skill{i + 1})''')
     def drop(self):
         for card in Ui_LOTR.choice_skill_check_deck:
             if card:
-                Ui_LOTR.discarding_deck.append(card)
+                Ui_LOTR.drop_deck.append(card)
         Ui_LOTR.choice_skill_check_deck = [0, 0, 0, 0]
-        icon_discard = QtGui.QIcon()
-        icon_discard.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon_drop = QtGui.QIcon()
+        icon_drop.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         for i in range(1, 5):
-            exec(f'self.choice_skill_{i}.setIcon(icon_discard)')
+            exec(f'self.choice_skill_{i}.setIcon(icon_drop)')
 
+        Ui_LOTR.drop_forming(self)
+    def drop_forming(self):
         self.Table.removeTab(12)
-        self.Discard = QtWidgets.QWidget()
-        self.Discard.setObjectName("Discard")
-        self.Table.addTab(self.Discard, "Сброс")
+        self.drop = QtWidgets.QWidget()
+        self.drop.setObjectName("drop")
+        self.Table.addTab(self.drop, "Сброс")
         x = 0
         y = 0
-        for i, v in enumerate(Ui_LOTR.discarding_deck):
-            exec(f'''self.discarding{i} = QtWidgets.QPushButton(self.Discard)''')
-            exec(f'''self.discarding{i}.setEnabled(True)''')
-            exec(f'''self.discarding{i}.setGeometry(QtCore.QRect(x, y, 155, 241))''')
-            exec(f'''self.discarding{i}.setText("")''')
-            exec(f'''icon_discarding{i} = QtGui.QIcon()''')
-            exec(f'''icon_discarding{i}.addPixmap(QtGui.QPixmap(f"{v}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)''')
-            exec(f'''self.discarding{i}.setIcon(icon_discarding{i})''')
-            exec(f'''self.discarding{i}.setIconSize(QtCore.QSize(160, 240))''')
-            exec(f'''self.discarding{i}.setCheckable(True)''')
-            exec(f'''self.discarding{i}.setObjectName(f"discarding{i}")''')
+        for i, v in enumerate(Ui_LOTR.drop_deck):
+            exec(f'''self.drop{i} = QtWidgets.QPushButton(self.drop)''')
+            exec(f'''self.drop{i}.setEnabled(True)''')
+            exec(f'''self.drop{i}.setGeometry(QtCore.QRect(x, y, 155, 241))''')
+            exec(f'''self.drop{i}.setText("")''')
+            exec(f'''icon_drop{i} = QtGui.QIcon()''')
+            exec(f'''icon_drop{i}.addPixmap(QtGui.QPixmap(f"{v}"), QtGui.QIcon.Normal, QtGui.QIcon.Off)''')
+            exec(f'''self.drop{i}.setIcon(icon_drop{i})''')
+            exec(f'''self.drop{i}.setIconSize(QtCore.QSize(160, 240))''')
+            exec(f'''self.drop{i}.setCheckable(True)''')
+            exec(f'''self.drop{i}.setObjectName(f"drop{i}")''')
             x += 155
             if x > 1550:
                 x = 0
                 y += 250
 
-            # exec(f'''self.discarding{i}_click()''')
+            exec(f'''self.drop{i}_click()''')
 
 
-# Может быть передавать Ui_LOTR.discarding_deck
+    for i in range(30):
+        exec(f'''def drop{i}_click(self):
+            self.drop{i}.clicked.connect(lambda: self.get_from_drop({i}))''')
+    def get_from_drop(self, ind):
+        for index, occupied in enumerate(Ui_LOTR.active_skill_deck):
+            if not occupied:
+                card = Ui_LOTR.drop_deck[ind]
+                Ui_LOTR.active_skill_deck[index] = card
+                icon_active = QtGui.QIcon()
+                icon_active.addPixmap(QtGui.QPixmap(f'{card}'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                exec(f'self.skill_{index + 1}_activate.setIcon(icon_active)')
+                exec(
+                    f'self.skill_{index + 1}_activate.setGeometry(QtCore.QRect(self.skill_{index + 1}_activate.geometry().getRect()[0]+4, self.skill_{index + 1}_activate.geometry().getRect()[1], 155, 241))')
+
+                Ui_LOTR.drop_deck.remove(card)
+                Ui_LOTR.drop_forming(self)
+                self.Table.setCurrentIndex(0) #12 что бы оставался на вкладке сброса
+                break
+
+
+
+
+
 
 
 if __name__ == '__main__':
