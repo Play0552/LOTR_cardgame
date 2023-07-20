@@ -908,13 +908,39 @@ class Ui_LOTR(object):
         exec(f'''def nickname{i}_click(self):
             self.nickname{i}.clicked.connect(lambda: self.select_nickname('{v}', '{i}'))''')
 
+    def delite_card_from_deck(self, path):
+        if path in Ui_LOTR.deck:
+            Ui_LOTR.deck.remove(path)
+
+        if path in Ui_LOTR.drop_deck:
+            Ui_LOTR.drop_deck.remove(path)
+            Ui_LOTR.drop_forming(self)
+
+        if path in Ui_LOTR.choice_skill_check_deck:
+            index = Ui_LOTR.choice_skill_check_deck.index(path)
+            Ui_LOTR.choice_skill_check_deck[index] = 0
+            icon_deactive = QtGui.QIcon()
+            icon_deactive.addPixmap(QtGui.QPixmap('Cards/Обратная_сторона_навыка.jpg'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            exec(f'self.choice_skill_{index+1}.setIcon(icon_deactive)')
+
+        if path in Ui_LOTR.active_skill_deck:
+            index = Ui_LOTR.active_skill_deck.index(path)
+            Ui_LOTR.active_skill_deck[index] = 0
+            icon_use = QtGui.QIcon()
+            icon_use.addPixmap(QtGui.QPixmap('Cards/Подготовленный навык.JPG'), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+            exec(f'self.skill_{index+1}_activate.setIcon(icon_use)')
+            exec(
+                f'self.skill_{index+1}_activate.setGeometry(QtCore.QRect(self.skill_{index+1}_activate.geometry().getRect()[0]-4, self.skill_{index+1}_activate.geometry().getRect()[1], 161, 228))')
+
     def select_nickname(self, path, num):
+
         exec(f'''if self.nickname{num}.isChecked():
             Ui_LOTR.deck.append('{path}')
             self.nickname{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.nickname{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
+
 
     for i, v in enumerate(main.Weakness):
         exec(f'''def weaknes{i}_click(self):
@@ -926,7 +952,7 @@ else:
             self.weaknes{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.weaknes{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
 
     for i, v in enumerate(main.Cracker_plus):
         exec(f'''def cracker{i}_click(self):
@@ -938,7 +964,7 @@ else:
             self.cracker{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.cracker{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
 
     for i, v in enumerate(main.Defender_plus):
         exec(f'''def defender{i}_click(self):
@@ -950,7 +976,7 @@ else:
             self.defender{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.defender{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
 
     for i, v in enumerate(main.Leader_plus):
         exec(f'''def leader{i}_click(self):
@@ -962,7 +988,7 @@ else:
             self.leader{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.leader{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
 
     for i, v in enumerate(main.Musician_plus):
         exec(f'''def musician{i}_click(self):
@@ -974,7 +1000,7 @@ else:
             self.musician{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.musician{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
 
     for i, v in enumerate(main.Hunter_plus):
         exec(f'''def hunter{i}_click(self):
@@ -986,7 +1012,7 @@ else:
             self.hunter{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.hunter{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
 
     for i, v in enumerate(main.Pathfinder_plus):
         exec(f'''def pathfinder{i}_click(self):
@@ -998,7 +1024,7 @@ else:
             self.pathfinder{num}.setIconSize(QtCore.QSize(100, 200))
 else:
     self.pathfinder{num}.setIconSize(QtCore.QSize(160, 240))
-    Ui_LOTR.deck.remove('{path}')''')
+    self.delite_card_from_deck('{path}')''')
 
     def courage_click(self):
         self.courage.clicked.connect(self.courage_)
@@ -1119,7 +1145,6 @@ else:
     def preparing(self, ind):
         card = Ui_LOTR.choice_skill_check_deck[ind - 1]
         if card:
-
             for index, occupied in enumerate(Ui_LOTR.active_skill_deck):
                 if not occupied:
                     Ui_LOTR.active_skill_deck[index] = card
@@ -1156,6 +1181,7 @@ else:
         self.skill_deck.clicked.connect(self.skill_select)
 
     def skill_select(self):
+
         if len(Ui_LOTR.deck) == 0:
             self.shuffle_card()
         for i, ready_skill in enumerate(Ui_LOTR.choice_skill_check_deck):
